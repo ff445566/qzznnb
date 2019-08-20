@@ -12,7 +12,7 @@ public class QzznnbApplication {
     }
     @RequestMapping("/hello")
     public String hello(){
-        return  "hello beijing ";
+        return  "hello beijing 11 35 ";
 
     }
 

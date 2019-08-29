@@ -34,7 +34,7 @@ mybatis:
 
 #日志配置
 logging:
-  file: E:/MyTools/log/qzzns.log #绝对路径
+  file: /qzzns.log #绝对路径
   level:
     root: info
 

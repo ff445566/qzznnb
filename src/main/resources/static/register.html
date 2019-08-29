@@ -1,0 +1,66 @@
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="application/javascript" src="js/register.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/register.css">
+    <title>注册页面</title>
+</head>
+<body>
+<div id="registerdiv" class="wrap">
+    <div class="container">
+        <h1>页面注册</h1>
+        <table border="1" align="center" width="500">
+        <tr>
+            <td><input type="text" name="username" id="username" placeholder="用户名"  ></td>
+        </tr>
+        <tr>
+            <td><input  type="password" name="password" id="password" placeholder="密码"  ></td>
+        </tr>
+        <tr>
+            <td><input type="text" name="age" id="age" placeholder="年龄"  ></td>
+        </tr>
+        <tr>
+           <td>
+             <select id="usertype">
+                        <option value="u00">身份选择</option>
+                        <option value="u001">在职</option>
+                        <option value="u002">学生</option>
+                        <option value="u003">专职备考</option>
+                        <option value="u004">以上岸</option>
+               </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td><input type="email" name="email" id="email"placeholder="邮箱" ></td>
+        </tr>
+        <tr>
+            <td>
+                <input id="btn"  type="submit" onclick="registfun()" value="注册"/>
+        </td>
+     </tr>
+
+    </table>
+
+        <p class="change_link" align="center">
+                            <span class="text">Already a member ?</span>
+                            <a href="login.html" class="to_login"> Go and log in </a>
+        </p>
+    </div>
+        <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+ </div>
+</body>
+</html>

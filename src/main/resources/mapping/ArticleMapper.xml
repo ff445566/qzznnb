@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whx.qzznnb.mapper.ArticleMapper">
+
+    <resultMap id="BaseResultMap" type="com.whx.qzznnb.entity.Article">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="authorid" jdbcType="INTEGER" property="authorid"/>
+    </resultMap>
+      <!-- 查询所有文章-->
+    <select id="selectAll" resultType="com.whx.qzznnb.entity.ArticleEntity" parameterType="String">
+       SELECT  a.title,a.content,a.maketime,a.aid,
+  t.typename type,u.username username
+FROM article a , arttype t,user u
+WHERE a.type =t.typeid
+and a.uid =u.uid
+</select>
+    <!-- 根据条件查询 某一篇文章-->
+    <select id="selectBy" resultType="com.whx.qzznnb.entity.ArticleEntity">
+        SELECT  a.title,a.content,a.maketime,a.aid,
+        t.typename type,u.username authorname
+        FROM article a , arttype  t,user u
+        <where>
+           a.type =t.typeid
+        and a.uid =u.uid
+        <if test="aid != null " >
+            and a.aid = #{aid}
+        </if>
+            <if test="title != null" >
+                and a.title like concat("%",#{title},"%")
+            </if>
+        </where>
+    </select>
+
+    <select id="feedSelect"   resultType="com.whx.qzznnb.entity.ArticleEntity">
+       SELECT aid,username, title, SUBSTR(content FROM 1 FOR 50) content,maketime,typename type
+    from  article   INNER JOIN user  on article.uid= user.uid
+    INNER JOIN arttype  on arttype.typeid =article.type
+    </select>
+</mapper>

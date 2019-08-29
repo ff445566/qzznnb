@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whx.qzznnb.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="com.whx.qzznnb.entity.User">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="passWord" jdbcType="VARCHAR" property="password" />
+
+    </resultMap>
+
+    <select id="Sel" resultType="com.whx.qzznnb.entity.User">
+        select * from user where uid = #{uid}
+    </select>
+    <select id="login" resultType="java.lang.String">
+        select  uid  from  user where username=#{username} and password =#{password}
+    </select>
+    <insert id="createUser" parameterType="com.whx.qzznnb.entity.User">
+        insert into user(username,password,uid,age,email,usertype)
+        value(#{username},#{password},#{uid},#{age},#{email},#{usertype})
+    </insert>
+    <!--检查name  是否重复-->
+    <select id="checkUserName" resultType="java.lang.String">
+           select  username from  user  where username= #{username}
+    </select>
+    <!--检查email 是否重复-->
+    <select id="checkEmail" resultType="java.lang.String">
+           select  username from  user  where email= #{email}
+    </select>
+</mapper>

@@ -1,9 +1,11 @@
 package com.whx.qzznnb;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+@MapperScan("com.whx.qzznnb.mapper")
 @SpringBootApplication
 public class QzznnbApplication {
 
@@ -12,7 +14,7 @@ public class QzznnbApplication {
     }
     @RequestMapping("/hello")
     public String hello(){
-        return  "hello beijing 11 35 ";
+        return  " hello beijing 11 35 ";
 
     }
 

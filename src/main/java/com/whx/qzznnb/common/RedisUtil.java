@@ -60,9 +60,23 @@ public final  class RedisUtil {
         }
 
     }
+    public  String Sget(int key){
+        try {
+            return redisTemplate.opsForValue().get(String.valueOf(key),0,-1);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
     public  boolean Sset(String key ,String value){
 
                redisTemplate.opsForValue().set(key,value);
+        return true;
+    }
+    public  boolean Sset(int key ,String value){
+
+        redisTemplate.opsForValue().set(String.valueOf(key),value);
         return true;
     }
 

@@ -1,0 +1,40 @@
+2019-09-11 10:28:09.476  INFO 18892 --- [main] com.whx.qzznnb.QzznnbApplication         : Starting QzznnbApplication on DESKTOP-L0BV718 with PID 18892 (E:\MyTools\qzznnb\target\classes started by admin in E:\MyTools\qzznnb)
+2019-09-11 10:28:09.485  INFO 18892 --- [main] com.whx.qzznnb.QzznnbApplication         : The following profiles are active: test
+2019-09-11 10:28:11.069  INFO 18892 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-09-11 10:28:11.073  INFO 18892 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-09-11 10:28:11.129  INFO 18892 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 17ms. Found 0 repository interfaces.
+2019-09-11 10:28:12.091  INFO 18892 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$cae1f1d8] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-09-11 10:28:13.023  INFO 18892 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2019-09-11 10:28:13.063  INFO 18892 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-09-11 10:28:13.063  INFO 18892 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.22]
+2019-09-11 10:28:13.454  INFO 18892 --- [main] o.a.c.c.C.[.[localhost].[/qzznnb]        : Initializing Spring embedded WebApplicationContext
+2019-09-11 10:28:13.454  INFO 18892 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 3759 ms
+2019-09-11 10:28:13.609  INFO 18892 --- [main] f.a.AutowiredAnnotationBeanPostProcessor : Autowired annotation is not supported on static fields: private static final org.slf4j.Logger com.whx.qzznnb.common.RedisUtil.Log
+2019-09-11 10:28:15.294  INFO 18892 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-09-11 10:28:15.889  INFO 18892 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path '/qzznnb'
+2019-09-11 10:28:15.893  INFO 18892 --- [main] com.whx.qzznnb.QzznnbApplication         : Started QzznnbApplication in 7.349 seconds (JVM running for 8.432)
+2019-09-11 10:31:48.422  INFO 15808 --- [main] com.whx.qzznnb.QzznnbApplication         : Starting QzznnbApplication on DESKTOP-L0BV718 with PID 15808 (E:\MyTools\qzznnb\target\classes started by admin in E:\MyTools\qzznnb)
+2019-09-11 10:31:48.430  INFO 15808 --- [main] com.whx.qzznnb.QzznnbApplication         : The following profiles are active: test
+2019-09-11 10:31:51.020  INFO 15808 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-09-11 10:31:51.028  INFO 15808 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-09-11 10:31:51.069  INFO 15808 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 18ms. Found 0 repository interfaces.
+2019-09-11 10:31:51.912  INFO 15808 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$128964e3] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-09-11 10:31:52.793  INFO 15808 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2019-09-11 10:31:52.839  INFO 15808 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-09-11 10:31:52.839  INFO 15808 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.22]
+2019-09-11 10:31:53.113  INFO 15808 --- [main] o.a.c.c.C.[.[localhost].[/qzznnb]        : Initializing Spring embedded WebApplicationContext
+2019-09-11 10:31:53.118  INFO 15808 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 4546 ms
+2019-09-11 10:31:53.342  INFO 15808 --- [main] f.a.AutowiredAnnotationBeanPostProcessor : Autowired annotation is not supported on static fields: private static final org.slf4j.Logger com.whx.qzznnb.common.RedisUtil.Log
+2019-09-11 10:31:56.412  INFO 15808 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-09-11 10:31:57.352  INFO 15808 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path '/qzznnb'
+2019-09-11 10:31:57.356  INFO 15808 --- [main] com.whx.qzznnb.QzznnbApplication         : Started QzznnbApplication in 9.667 seconds (JVM running for 10.305)
+2019-09-11 11:13:55.059  INFO 6128 --- [main] com.whx.qzznnb.QzznnbApplicationTests    : Starting QzznnbApplicationTests on DESKTOP-L0BV718 with PID 6128 (started by admin in E:\MyTools\qzznnb)
+2019-09-11 11:13:55.060  INFO 6128 --- [main] com.whx.qzznnb.QzznnbApplicationTests    : The following profiles are active: test
+2019-09-11 11:13:56.545  INFO 6128 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-09-11 11:13:56.548  INFO 6128 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-09-11 11:13:56.593  INFO 6128 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 25ms. Found 0 repository interfaces.
+2019-09-11 11:13:57.222  INFO 6128 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$df5dc8d3] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-09-11 11:13:57.289  INFO 6128 --- [main] f.a.AutowiredAnnotationBeanPostProcessor : Autowired annotation is not supported on static fields: private static final org.slf4j.Logger com.whx.qzznnb.common.RedisUtil.Log
+2019-09-11 11:13:59.885  INFO 6128 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-09-11 11:14:00.853  INFO 6128 --- [main] com.whx.qzznnb.QzznnbApplicationTests    : Started QzznnbApplicationTests in 6.331 seconds (JVM running for 7.713)
+2019-09-11 11:14:01.562  INFO 6128 --- [Thread-2] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'

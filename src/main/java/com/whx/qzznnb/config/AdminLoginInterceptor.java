@@ -7,6 +7,9 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**   用户登录拦截器
  * @ClassName AdminLoginInterceptor
@@ -34,14 +37,30 @@ public class AdminLoginInterceptor implements HandlerInterceptor {
                } //
 
                 //  不存在则跳转到登录页
-                httpServletResponse.sendRedirect( "http://127.0.0.1:8080/login.html");
+                //httpServletResponse.sendRedirect( "http://127.0.0.1:8080/login.html");
+                //拦截之后返回
+           httpServletResponse.setContentType("text/html;charset=utf-8");
+
+           PrintWriter out =httpServletResponse.getWriter();
+           Map<String, Object> resultMap=new ConcurrentHashMap<String, Object>();
+           resultMap.put("msg","无权限查看");
+           resultMap.put("status",111);
+           out.println(resultMap);
+           out.flush();
                 return false;
 
         } catch (Exception e){
             //  不存在则跳转到登录页
             e.printStackTrace();
+
+           PrintWriter out =httpServletResponse.getWriter();
+           Map<String, Object> resultMap=new ConcurrentHashMap<String, Object>();
+           resultMap.put("msg","异常,无发查看");
+           resultMap.put("status",111);
+           out.println(resultMap);
+           out.flush();
            System.out.println("拦截器 异常");
-            httpServletResponse.sendRedirect( "http://127.0.0.1:8080/login.html");
+         //   httpServletResponse.sendRedirect( "http://127.0.0.1:8080/login.html");
               return false;
         }
 

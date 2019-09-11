@@ -42,6 +42,11 @@ public class ArticleServiceImp  implements ArticleService {
 
     }
 
+    @Override
+    public List<ArticleEntity> selectArticleByUid(String uid) {
+        return articleMapper.selectByUid(uid);
+    }
+
 
 //    public List<ArticleEntity> selectArticleByTitle(String title) {
 //
@@ -55,7 +60,17 @@ public class ArticleServiceImp  implements ArticleService {
      */
     public   ArticleEntity  selectArticleByAid(String aid) {
         System.out.println("aid" +aid);
-        return articleMapper.selectBy(aid,null);
+        return articleMapper.selectBy(aid);
+    }
+
+    /**
+     * 保存文章
+     * @param articleEntity
+     * @return
+     */
+    @Override
+    public int saveArticle(ArticleEntity articleEntity) {
+        return  articleMapper.saveArticle(articleEntity);
     }
 
     /**

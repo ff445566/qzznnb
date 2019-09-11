@@ -1,17 +1,13 @@
 function registfun(){
-    var username = $("#username").val()
-    // 身份不能不选择
 
-    console.log(username);
     $.ajax({
         async : true,
         type : "post",
-        url : "http://127.0.0.1:8080/user/create",
+       url : "http://127.0.0.1:8082/qzznnb/user/create",
+        //  url : "http://120.27.4.196:8082/qzznnb/user/create",
         data: {
-            "username" : username,
+            "phone" :  $("#phone").val(),
             "password" : $("#password").val(),
-            "age": $("#age").val(),
-            "email": $("#email").val(),
             "usertype" : $("#usertype").val()
 
         },

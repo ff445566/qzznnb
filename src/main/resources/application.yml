@@ -1,3 +1,4 @@
 spring:
   profiles:
-    active: test # 测试huanj
+    active: dev
+

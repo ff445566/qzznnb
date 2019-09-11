@@ -8,32 +8,37 @@
     </resultMap>
       <!-- 查询所有文章-->
     <select id="selectAll" resultType="com.whx.qzznnb.entity.ArticleEntity" parameterType="String">
-       SELECT  a.title,a.content,a.maketime,a.aid,
-  t.typename type,u.username username
-FROM article a , arttype t,user u
-WHERE a.type =t.typeid
-and a.uid =u.uid
-</select>
+    SELECT  a.title,a.content,a.maketime,a.aid,a.list_style,
+   type,u.username username
+FROM article a  ,user u
+WHERE  a.uid =u.uid
+   </select>
     <!-- 根据条件查询 某一篇文章-->
     <select id="selectBy" resultType="com.whx.qzznnb.entity.ArticleEntity">
-        SELECT  a.title,a.content,a.maketime,a.aid,
-        t.typename type,u.username authorname
-        FROM article a , arttype  t,user u
+        SELECT  a.title,a.content,a.maketime,a.aid,a.list_style,
+             type,u.username,u.uid
+        FROM article a , user u
         <where>
-           a.type =t.typeid
-        and a.uid =u.uid
+           a.uid =u.uid
         <if test="aid != null " >
             and a.aid = #{aid}
         </if>
-            <if test="title != null" >
-                and a.title like concat("%",#{title},"%")
-            </if>
         </where>
     </select>
-
-    <select id="feedSelect"   resultType="com.whx.qzznnb.entity.ArticleEntity">
-       SELECT aid,username, title, SUBSTR(content FROM 1 FOR 50) content,maketime,typename type
-    from  article   INNER JOIN user  on article.uid= user.uid
-    INNER JOIN arttype  on arttype.typeid =article.type
+    <!-- 查询我的文章-->
+    <select id="selectByUid" resultType="com.whx.qzznnb.entity.ArticleEntity">
+         select  u.uid ,username,aid,title,content,maketime,type,list_style
+           from  article  INNER JOIN user u on article.uid= u.uid
+           where u.uid=#{uid};
     </select>
+            <!--feed 页面-->
+    <select id="feedSelect"   resultType="com.whx.qzznnb.entity.ArticleEntity">
+       SELECT aid,username,u.uid, title, SUBSTR(content FROM 1 FOR 50) content,maketime, type,list_style
+         from  article   INNER JOIN user u on article.uid= u.uid
+    </select>
+           <!-- 保存文章-->
+    <insert id="saveArticle" parameterType="com.whx.qzznnb.entity.ArticleEntity">
+    INSERT INTO article  (uid,aid,title,content,maketime,type,list_style)
+     VALUES(#{uid},#{aid},#{title},#{content},#{maketime},#{type},#{list_style});
+    </insert>
 </mapper>

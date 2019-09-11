@@ -1,6 +1,5 @@
 package com.whx.qzznnb.config;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -11,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @Date 2019/8/27 21:02
  * @Version 1.0.0
  **/
-@Configuration
+//@Configuration  取消拦截
 public class AdminLoginConfiguration implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -19,10 +18,12 @@ public class AdminLoginConfiguration implements WebMvcConfigurer {
          AdminLoginInterceptor adminLoginInterceptor =new AdminLoginInterceptor();
         InterceptorRegistration interceptorRegistry = registry.addInterceptor(adminLoginInterceptor);
         // 扫描路径
-        interceptorRegistry.addPathPatterns("/**");
+      //  interceptorRegistry.addPathPatterns("/**");
         // 排除路径
+        interceptorRegistry.excludePathPatterns("/**");//排除所有路径
         interceptorRegistry.excludePathPatterns("/user/login");
         interceptorRegistry.excludePathPatterns("/user/create");
+        interceptorRegistry.excludePathPatterns("/hello");
 
         //  排除请求资源
         interceptorRegistry.excludePathPatterns("/css/*.css");

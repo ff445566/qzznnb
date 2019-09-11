@@ -6,25 +6,48 @@
         <result column="id" jdbcType="INTEGER" property="id" />
         <result column="name" jdbcType="VARCHAR" property="name" />
         <result column="passWord" jdbcType="VARCHAR" property="password" />
-
     </resultMap>
 
-    <select id="Sel" resultType="com.whx.qzznnb.entity.User">
-        select * from user where uid = #{uid}
+    <select id="selectByUid" resultType="com.whx.qzznnb.entity.User">
+       select uid,username,password,phone, user_type FROM user where uid=#{uid};
     </select>
-    <select id="login" resultType="java.lang.String">
-        select  uid  from  user where username=#{username} and password =#{password}
+    <select id="login" resultType="com.whx.qzznnb.entity.User">
+        select  uid ,username from  user where phone=#{phone} and password =#{password}
     </select>
     <insert id="createUser" parameterType="com.whx.qzznnb.entity.User">
-        insert into user(username,password,uid,age,email,usertype)
-        value(#{username},#{password},#{uid},#{age},#{email},#{usertype})
+        insert into user(username,password,uid,phone,user_type) value(#{username},#{password},#{uid},#{phone},#{user_type})
     </insert>
     <!--检查name  是否重复-->
     <select id="checkUserName" resultType="java.lang.String">
            select  username from  user  where username= #{username}
     </select>
-    <!--检查email 是否重复-->
-    <select id="checkEmail" resultType="java.lang.String">
-           select  username from  user  where email= #{email}
+    <!--检测手机号  是否重复-->
+    <select id="checkPhone" resultType="java.lang.Integer">
+           select  uid from  user  where phone= #{phone}
     </select>
+    <!--  查询最新打卡时间 -->
+    <select id="checkLastTime" resultType="String">
+        SELECT lasttime from user_call where uid=#{uid};
+    </select>
+
+    <!-- 修改个人信息 -->
+  <update id="updateInfo">
+ update user u
+    <set>
+     <if test="uid != null"> u.uid =#{uid},</if>
+    <if test="username != null"> u.username = #{username},</if>
+    <if test="password != null"> u.password = #{password},</if>
+    <if test="user_type != null">u.user_type = #{user_type},</if>
+   </set>
+ where u.uid = #{uid}
+ </update>
+    <!-- 更新 最新打开时间 和 总进度-->
+  <update id="updateCall">
+     update user_call
+        set progress = CONCAT(progress,",",#{progress}),
+        lasttime=#{progress}
+     where uid =#{uid}
+ </update>
+
+
 </mapper>

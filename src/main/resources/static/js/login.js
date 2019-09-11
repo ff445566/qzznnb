@@ -1,12 +1,12 @@
 function userloginfun(){
 
-    console.log(username);
     $.ajax({
         async : true,
         type : "post",
-        url : "http://127.0.0.1:8080/user/login",
+       url : "http://127.0.0.1:8082/qzznnb/user/login",
+        //url: "http://120.27.4.196:8082/qzznnb/user/login",
         data: {
-            "username" : $("#username").val(),
+            "phone" : $("#phone").val(),
             "password" : $("#password").val()
         },
         dataType:"json",

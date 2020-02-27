@@ -1,0 +1,82 @@
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="application/javascript" src="js/register.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/register.css">
+    <title>发表文章页面</title>
+</head>
+<body>
+<div id="registerdiv" class="wrap">
+    <div class="container">
+        <h1>页面注册</h1>
+        <table border="1" align="center" width="500">
+            <tr>
+                <td><input type="title" name="title" id="title"placeholder="title" ></td>
+            </tr>
+        <tr>
+            <td><input  type="content" name="content" id="content" placeholder="content"  ></td>
+        </tr>
+            <tr>
+                <td><input    name="content" id="list_style" placeholder="list_style"  ></td>
+            </tr>
+        <tr>
+           <td>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <input id="btn"  type="submit" onclick="saveartfun()" value="发表文章"/>
+        </td>
+     </tr>
+
+    </table>
+    </div>
+        <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+ </div>
+<script>
+    function saveartfun() {
+        var user_info ='{uid:111,user_name: "whx"}';
+        var map='{"type_id":"A000","type_name":"行测"},{"type_id":"D000","type_name":"笔试"}';
+        $.ajax({
+            async : true,
+            type : "post",
+            url : "http://127.0.0.1:8082/qzznnb/art/save",
+            //  url : "http://120.27.4.196:8082/qzznnb/user/create",
+            data: {
+                "user_info":user_info,
+                "type" : map,
+                "title" :  $("#title").val(),
+                "content" : $("#content").val(),
+                "list_style" : $("#list_style").val()
+
+            },
+            dataType:"json",
+            success : function (data) {
+                console.log(data)
+            },
+            error :function () {
+
+                alert("it has error");
+
+            }
+        })
+
+    }
+</script>
+</body>
+</html>

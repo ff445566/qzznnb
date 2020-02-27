@@ -2,15 +2,19 @@ package com.whx.qzznnb.controller;
 
 import com.whx.qzznnb.common.DataChangeUtil;
 import com.whx.qzznnb.common.ServeResponse;
+import com.whx.qzznnb.common.TimeUtil;
+import com.whx.qzznnb.common.UuidUtil;
 import com.whx.qzznnb.entity.ArticleCan;
 import com.whx.qzznnb.entity.ArticleEntity;
+import com.whx.qzznnb.entity.ArticleIn;
 import com.whx.qzznnb.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -20,11 +24,12 @@ public class ArticleController {
     private ArticleService articleService;
 
     /**
-     * feed 页面查询
+     * feed 页面查询  查询精华文章
      * @return
      */
     @RequestMapping("/select_feed")
     public   ServeResponse<List<ArticleCan>> feedSelect(){
+
         List<ArticleEntity> artlist =articleService.feedSelect();
         if(artlist.size()==0){
             return ServeResponse.createByErrorMessage("传输失败");
@@ -40,7 +45,8 @@ public class ArticleController {
     public  ServeResponse<ArticleCan> selectByAid(@RequestParam String aid){
         ArticleEntity articleEntity =articleService.selectArticleByAid(aid);
         if(articleEntity != null){
-            ArticleCan articleCan = new ArticleCan(articleEntity);
+
+            ArticleCan articleCan =  new ArticleCan.Builder(articleEntity).builder();
             return  ServeResponse.createBySuccess("查询成功",articleCan);
         }
         else
@@ -49,25 +55,15 @@ public class ArticleController {
     /**
      * 保存文章
      */
-    //{"aid":"1","user_info":{"uid":"1","user_name":"whx"},"title":"相信自己","content":"  ","make_time":"2019-08-20T22:18:13.000+0000",
-    //                                             "type":[
-    //											 {"type_name":"行测","type_id":"A000"},{"type_name":"申论","type_id":"B000"}
-    //											         ],
-    //								"list_style":"1"},{},{}
-    //		  ] {user_info":{"uid":"1","user_name":"whx"},
-    //"type":[
-    //{"type_name":"行测","type_id":"A000"},{"type_name":"申论","type_id":"B000"}
-    //],
-    //"title":"相信自己","content":" ","list_style":"1"}
-    //}
+
     @RequestMapping("/save")
-    public  ServeResponse<String> saveArticle( List<HashMap<String ,String >> type,HashMap<String,String> user_info,String title,String content,String list_style){
-    //public  ServeResponse<String> saveArticle(@RequestBody ){
-//            articleCan.setmake_time(TimeUtil.getNowTime());
-//        articleCan.setAid(UuidUtil.getUuid());
-        int result=0;
+    public ServeResponse<String>  saveArticle(@RequestBody ArticleIn articleIn){
+        Date maketime = TimeUtil.getNowTime();
+        String aid =UuidUtil.getUuid();
+       int result=0;
         try {
-            //result =articleService.saveArticle(new ArticleEntity(articleCan));
+            result =articleService.saveArticle(new ArticleEntity(articleIn,maketime,aid));
+            result =articleService.saveArticle(new ArticleEntity(articleIn,maketime,aid));
             if(result!=0){
                 return  ServeResponse.createBySuccess("保存成功");
             }

@@ -49,7 +49,7 @@ public class ServeResponse<T> implements Serializable {
         return data;
     }
     //
-    public static <T>ServeResponse<T> createBySuccess(){
+    public static  <T>ServeResponse<T> createBySuccess(){
 
         return new ServeResponse<T>(ResponseCode.SUCCESS.getCode());
     }
@@ -74,8 +74,13 @@ public class ServeResponse<T> implements Serializable {
 
         return new ServeResponse<T>(ResponseCode.Error.getCode(),errormessage);
     }
+
     public static <T>ServeResponse<T> createByErrorCodeMessage(int errorcode,String errormessage){
 
         return new ServeResponse<T>(errorcode,errormessage);
+    }
+    public static <T>ServeResponse<T> createBySuccessCodeMessage(int successcode,String successmessage){
+
+        return new ServeResponse<T>(successcode,successmessage);
     }
 }

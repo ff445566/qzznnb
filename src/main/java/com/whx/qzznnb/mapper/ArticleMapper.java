@@ -12,6 +12,7 @@ public interface ArticleMapper {
     List<ArticleEntity> selectAll();//查询所有文章
 
     List<ArticleEntity> feedSelect(); //feed页面
+    List<ArticleEntity> feedSelect_Main(int page ,int counts); //主页面用到的精华文章
 
     ArticleEntity selectBy(@Param("aid") String aid); //根据 文章id查询
 

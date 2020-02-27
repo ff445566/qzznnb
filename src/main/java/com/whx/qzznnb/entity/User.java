@@ -4,17 +4,6 @@ public class User {
 
     private String username; //昵称
     private String password;
-
-    public String getUser_type() {
-        return user_type;
-    }
-
-    public void setUser_type(String user_type) {
-        this.user_type = user_type;
-    }
-
-    //  private String email;
-   // private int age;
     private String user_type; //用户   类型
     private String uid; //唯一性id
     private String  phone;
@@ -27,11 +16,13 @@ public class User {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+    public String getUser_type() {
+        return user_type;
+    }
 
-
-
-
-
+    public void setUser_type(String user_type) {
+        this.user_type = user_type;
+    }
     public String getUsername() {
         return username;
     }

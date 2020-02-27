@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whx.qzznnb.play.mapper.Play_CommentMapper">
+
+           <!-- 保存评论-->
+	<!-- 动态sql插入 -->
+	<!-- 对应的插入字段的名字 -->
+	<sql id="key_save_play_comment">
+		<trim suffixOverrides=",">
+			<if test="comment_id!=null and comment_id!=''">
+				comment_id,
+			</if>
+			<if test="anid!=null and anid!=''">
+				anid,
+			</if>
+			<if test="uid!=null and uid!=''">
+				uid,
+			</if>
+			<if test="to_id!=null and to_id!=''">
+				to_id,
+			</if>
+			<if test="to_uid!=null and to_uid!=''">
+				to_uid,
+			</if>
+			<if test="is_father!=null and is_father!=''">
+				is_father,
+			</if>
+			<if test="father_id!=null and father_id!=''">
+				father_id,
+			</if>
+			<if test="content!=null and content!=''">
+				content,
+			</if>
+
+				maketime,
+
+			<if test="list_style!=null and list_style!=''">
+				list_style,
+			</if>
+		</trim>
+	</sql>
+	<!-- 对应的插入字段的值 -->
+	<sql id="values_save_play_comment">
+		<trim suffixOverrides=",">
+			<if test="comment_id!=null and comment_id!=''">
+				#{comment_id},
+			</if>
+			<if test="anid!=null and anid!=''">
+				#{anid},
+			</if>
+			<if test="uid!=null and uid!=''">
+				#{uid},
+			</if>
+			<if test="to_id!=null and to_id!=''">
+				#{to_id},
+			</if>
+			<if test="to_uid!=null and to_uid!=''">
+				#{to_uid},
+			</if>
+			<if test="is_father!=null and is_father!=''">
+				#{is_father},
+			</if>
+			<if test="father_id!=null and father_id!=''">
+				#{father_id},
+			</if>
+			<if test="content!=null and content!=''">
+				#{content},
+			</if>
+
+				#{maketime},
+
+			<if test="list_style!=null and list_style!=''">
+				#{list_style},
+			</if>
+
+		</trim>
+	</sql>
+	<insert id="save_Play_Comment" parameterType="com.whx.qzznnb.play.entity.Play_Comment">
+		insert into play_comment(<include refid="key_save_play_comment"/>)
+		values(<include refid="values_save_play_comment"/>)
+	</insert>
+
+	<select id="selcet_Two_Comment_Anid"  parameterType="java.lang.String" resultType="com.whx.qzznnb.play.entity.Play_Comment">
+   SELECT
+	a.comment_id,
+	a.anid,
+	a.uid,
+	a.is_father,
+	a.father_id,
+	a.to_id,
+	a.to_uid,
+	a.content,
+	a.maketime,
+	a.list_style,
+	b.username
+FROM
+	play_comment a,
+	USER b
+WHERE
+	b.uid = a.uid
+AND a.anid = #{anid}
+AND is_father = '1'
+ORDER BY
+	maketime ASC;
+    </select>
+
+
+   <!-- 根据问题id  查询一级评论 -->
+	<select id ="selcet_One_Comment" resultType="com.whx.qzznnb.play.entity.Play_Comment">
+	SELECT
+		a.comment_id,
+		a.anid,
+		a.uid,
+		d.username,
+		a.content,
+		a.maketime,
+		a.list_style
+	FROM
+		play_comment a,
+		play_answer b,
+		play_question c,
+		USER d
+	WHERE
+		c.qid = b.qid
+	AND b.anid = a.anid
+	AND a.is_father = "1"
+	AND c.qid = #{qid}
+	AND d.uid = a.uid;
+	</select>
+
+	<!--  根据一级评论id 查询，其 二级评论 -->
+	<select id="selcet_Two_Comment"  resultType="com.whx.qzznnb.play.entity.Play_Comment">
+SELECT
+	u1.username username,
+	u2.username to_username,
+	ff.comment_id,
+	ff.anid,
+	ff.uid,
+	ff.father_id,
+	ff.to_id,
+	ff.content,
+	ff.maketime,
+	ff.list_style
+FROM
+	USER u2,
+	play_comment c1
+INNER JOIN (
+	SELECT
+		a.comment_id,
+		a.anid,
+		a.uid,
+		a.is_father,
+		a.father_id,
+		a.to_id,
+		a.content,
+		a.maketime,
+		a.list_style
+	FROM
+		play_comment a
+	WHERE
+		a.is_father = "2"
+	AND a.father_id = #{comment_id}
+) ff ON ff.to_id = c1.comment_id
+INNER JOIN `user` u1 ON u1.uid = ff.uid
+WHERE
+	u2.uid = c1.uid
+</select>
+    <!--  根据一级评论id集合 查询，某个问题下的 二级评论集合 -->
+    <select id="select_two_commentbyList" parameterType="java.util.List" resultType="com.whx.qzznnb.play.entity.Play_Comment">
+        SELECT
+        u1.username username,
+        u2.username to_username,
+        ff.comment_id,
+        ff.anid,
+        ff.uid,
+        ff.father_id,
+        ff.to_id,
+        ff.content,
+        ff.maketime,
+        ff.list_style
+        FROM
+        USER u2,
+        play_comment c1
+        INNER JOIN (
+        SELECT
+        a.comment_id,
+        a.anid,
+        a.uid,
+        a.is_father,
+        a.father_id,
+        a.to_id,
+        a.content,
+        a.maketime,
+        a.list_style
+        FROM
+        play_comment a
+        WHERE
+        a.is_father = "2"
+        AND a.father_id in <foreach collection="comment_list" index="index" item="father_id" open="(" close=")" separator=",">
+        #{father_id}
+    </foreach>
+        ) ff ON ff.to_id = c1.comment_id
+        INNER JOIN `user` u1 ON u1.uid = ff.uid
+        WHERE
+        u2.uid = c1.uid
+    </select>
+</mapper>

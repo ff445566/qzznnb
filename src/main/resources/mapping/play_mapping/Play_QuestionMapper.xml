@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whx.qzznnb.play.mapper.Play_QuestionMapper">
+
+           <!-- 保存问题-->
+    <insert id="save_Play_Question" parameterType="com.whx.qzznnb.play.entity.Play_Question">
+    INSERT INTO play_question  (qid,uid,title,content,maketime,type,list_style)
+     VALUES(#{qid},#{uid},#{title},#{content},#{maketime},#{type},#{list_style});
+    </insert>
+
+    <select id="selcet_Play_Question" parameterType="java.lang.String"  resultType="com.whx.qzznnb.play.entity.Play_Question">
+    	select
+    qid,
+  	title,
+	content,
+	maketime,
+	type,
+	list_style,
+	a.uid,
+	username,
+	c.type_name
+FROM
+	play_question a
+INNER JOIN USER b ON qid = #{qid}
+AND a.uid = b.uid,play_topic c
+where c.type_id =a.type
+;
+
+    </select>
+
+	<select id="select_Play_AllTopic" resultType="com.whx.qzznnb.play.entity.Play_Topic">
+		select type_id,type_name
+		from play_topic
+	</select>
+	                     <!--      查询问题的数量   -->
+	<select id ='select_Question_counts' resultType="int">
+SELECT
+	count(qid) cou
+FROM
+	(
+		SELECT
+			qid
+		FROM
+			play_answer a
+		GROUP BY
+			qid
+	) a
+ </select>
+	<select id="select_Play_FeedQuestion" resultType="com.whx.qzznnb.play.entity.Play_Question">
+SELECT
+	content,
+	q.uid,
+	u1.username,
+	title,
+	maketime,
+	qid,
+	type,
+	t.type_name,
+	feed_style,
+	list_style
+FROM
+	play_question q join  user u1 on u1.uid =q.uid join  play_topic t on t.type_id =q.type
+WHERE
+	qid IN (
+		SELECT
+			qid
+		FROM
+			(
+				SELECT
+					qid
+				FROM
+					play_answer a
+				GROUP BY
+					qid
+				ORDER BY
+					count(anid) DESC
+				LIMIT #{page},
+				#{counts}
+			) a
+	)
+	</select>
+
+
+	<!-- 根据问题id，取出的答案 是评论数最多的5个答案中，回答时间最早-->
+	<!--
+	<select id="select_Play_FeedQueAns" resultType="com.whx.qzznnb.play.entity.Play_Answer">
+		SELECT
+	qid,
+	anid,
+	uid,
+	u.username,
+	content,
+	maketime,
+	type,
+	list_style
+FROM
+	play_answer e
+INNER JOIN `user` u USING (uid)
+WHERE
+	e.anid IN (
+		SELECT
+			anid
+		FROM
+			(
+				SELECT
+					b.anid
+				FROM
+					play_comment b
+				WHERE
+					b.is_father = 1
+				AND b.anid IN (
+					SELECT
+						anid
+					FROM
+						play_answer c
+					WHERE
+						c.qid = #{qid}
+				)
+				GROUP BY
+					anid
+				ORDER BY
+					count(b.comment_id) DESC
+				LIMIT 5
+			) d
+	)
+ORDER BY
+	maketime DESC
+LIMIT 1;
+	</select>selcet_Play_Question
+
+	-->
+	<select id="select_Play_FeedQueAns" resultType="com.whx.qzznnb.play.entity.Play_Answer">
+		SELECT
+	qid,
+	anid,
+	uid,
+	u.username,
+	content,
+	maketime,
+	type,
+	list_style
+FROM
+	play_answer e
+INNER JOIN `user` u USING (uid)
+ORDER BY
+	maketime DESC
+LIMIT 1;
+	</select>
+	<!-- 根据用户id查询问题 -->
+	<select id ="select_que_byuid" resultType="com.whx.qzznnb.play.entity.Play_Question">
+
+SELECT content ,title ,u.uid,u.username,maketime,qid,type, list_style,feed_style
+	from play_question p
+  join user u
+	on u.uid=p.uid
+where p.uid =#{uid};
+	</select>
+</mapper>

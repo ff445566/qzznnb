@@ -31,7 +31,5 @@ public class NameUtil {
         return randomName;
     }
 
-//    public static void main(String[] args) {
-//        System.out.println(getRandomJianHan(6));
-//    }
+
 }

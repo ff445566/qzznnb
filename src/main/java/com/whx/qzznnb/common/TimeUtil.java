@@ -36,8 +36,23 @@ public class TimeUtil {
         if(one > two) return 1;
         else return -1;
     }
+   //将时间转换为时间戳
+     public static  long dateToStamp(Date date){
+         String res;
+         long ts = date.getTime();
+         res = String.valueOf(ts);
+         return Long.valueOf(res);
+     }
+     public static void main(String[] args) {
 
-//     public static void main(String[] args) {
-//        System.out.println(" 结果"+stampCompare("1567758312","1567271520"));
-//    }
+        System.out.println(" 结果"+getTodayStamp());
+    }
+    // 得到今天的时间 具体到天 例如 20191210
+    public  static String   getTodayStamp(){
+
+        Date d = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        return  sdf.format(d);
+
+    }
 }

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whx.qzznnb.mapper.PlanMapper">
+
+
+
+    <!-- 查询制定好的初始计划 各个模块-->
+    <select id="selectPlan" resultType="com.whx.qzznnb.entity.Plan">
+SELECT uid ,module_id,module_name,content, list_style,factor
+ from plan
+
+where module_id in (SELECT module_id FROM plan GROUP BY module_id)
+and uid='0001';
+ </select>
+    <!-- 将客户端的单各计划化不错的插入 单条-->
+    <insert id="up_plan" parameterType="com.whx.qzznnb.entity.Plan">
+INSERT plan_user (id,uid,module_id,module_name,content, factor,list_style)
+VALUES(#{id},#{uid},#{module_id},#{module_name},#{content},#{factor},#{list_style})
+   </insert>
+    <insert id ="up_plan_s" parameterType="java.util.List">
+INSERT plan_user (id,uid,module_id,module_name,content, factor,list_style)
+VALUES <foreach collection="list" item="plan" separator="," close=";">
+        (#{plan.id},#{plan.uid},#{plan.module_id},#{plan.module_name},#{plan.content},#{plan.factor},#{plan.list_style})
+        </foreach>
+    </insert>
+    <!-- 更新计划  将原来的今日计划删除 状态设置为2  -->
+    <update id="update_today" parameterType="java.util.List">
+    UPDATE  plan_today
+    SET  plan_status = "2",
+    update_time = #{updatetime}
+    where p.id IN
+    <foreach collection="list" item="plan" separator="," close=";">
+        (#{plan})
+    </foreach>
+
+    </update>
+    <!--保存新的每日计划 -->
+    <insert id="save_today"  parameterType="java.util.List">
+        INSERT plan_today (id,uid,plan_id,plan_content,plan_status,plan_type, create_time)
+        VALUES
+        <foreach collection="list"  item="plan" separator="," close=";">
+        (#{plan.id},#{plan.uid},#{plan.module_id},#{plan.module_name},#{plan.content},#{plan.factor},#{plan.list_style})
+        </foreach>
+    </insert>
+     <!-- 展现所有的今日计划  sql语句不够完美 后期需要修改 -->
+    <select id ="select_all_today_Plan" resultType="com.whx.qzznnb.plan.entity.Plan_today_out" >
+
+        select uid ,plan_id,plan_content,plan_type  FROM (SELECT * from plan_today
+where  plan_status =2
+and to_days(create_time) = TO_DAYS(NOW())
+and update_time  is null
+UNION
+SELECT * from plan_today
+where  to_days(update_time) =TO_DAYS(NOW()) ) a
+ORDER BY a.plan_id desc
+    </select>
+</mapper>

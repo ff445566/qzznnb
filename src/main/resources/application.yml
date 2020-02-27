@@ -1,4 +1,4 @@
 spring:
   profiles:
+    ##开发环境 dev  测试环境test 生产环境pro
     active: dev
-

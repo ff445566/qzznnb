@@ -9,9 +9,10 @@ function userloginfun(){
             "phone" : $("#phone").val(),
             "password" : $("#password").val()
         },
-        dataType:"json",
+        dataType:"text",
         success : function (data) {
-            console.log(data)
+            alert("登陆 成功 ");
+            console.log(data);
         },
         error :function () {
 

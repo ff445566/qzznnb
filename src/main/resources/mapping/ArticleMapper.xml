@@ -2,10 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.whx.qzznnb.mapper.ArticleMapper">
 
-    <resultMap id="BaseResultMap" type="com.whx.qzznnb.entity.Article">
-        <result column="id" jdbcType="INTEGER" property="id" />
-        <result column="authorid" jdbcType="INTEGER" property="authorid"/>
-    </resultMap>
+
       <!-- 查询所有文章-->
     <select id="selectAll" resultType="com.whx.qzznnb.entity.ArticleEntity" parameterType="String">
     SELECT  a.title,a.content,a.maketime,a.aid,a.list_style,
@@ -15,8 +12,7 @@ WHERE  a.uid =u.uid
    </select>
     <!-- 根据条件查询 某一篇文章-->
     <select id="selectBy" resultType="com.whx.qzznnb.entity.ArticleEntity">
-        SELECT  a.title,a.content,a.maketime,a.aid,a.list_style,
-             type,u.username,u.uid
+        select  u.uid ,username,aid,title,content,maketime,list_style,type
         FROM article a , user u
         <where>
            a.uid =u.uid
@@ -35,6 +31,12 @@ WHERE  a.uid =u.uid
     <select id="feedSelect"   resultType="com.whx.qzznnb.entity.ArticleEntity">
        SELECT aid,username,u.uid, title, SUBSTR(content FROM 1 FOR 50) content,maketime, type,list_style
          from  article   INNER JOIN user u on article.uid= u.uid
+    </select>
+    <select id="feedSelect_Main" resultType="com.whx.qzznnb.entity.ArticleEntity">
+       SELECT aid,username,u.uid, title, SUBSTR(content FROM 1 FOR 50) content,
+               maketime, type,list_style,feed_style
+         from  article   INNER JOIN user u on article.uid = u.uid
+         order by maketime  desc  limit #{page}, #{counts}
     </select>
            <!-- 保存文章-->
     <insert id="saveArticle" parameterType="com.whx.qzznnb.entity.ArticleEntity">

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whx.qzznnb.access.mapper.Acc_ArticleMapper">
+
+
+    <select id="selectAll" resultType="com.whx.qzznnb.entity.ArticleEntity" parameterType="String">
+    SELECT  a.title,a.content,a.maketime,a.aid,a.list_style,
+   type,u.username username
+FROM article a  ,user u
+WHERE  a.uid =u.uid
+   </select>
+    <!-- 根据条件查询 某一篇文章-->
+    <select id="selectBy" resultType="com.whx.qzznnb.entity.ArticleEntity">
+        select  u.uid ,username,aid,title,content,maketime,list_style,type
+        FROM article a , user u
+        <where>
+           a.uid =u.uid
+        <if test="aid != null " >
+            and a.aid = #{aid}
+        </if>
+        </where>
+    </select>
+    <!-- 查询我的文章-->
+    <select id="selectByUid" resultType="com.whx.qzznnb.entity.ArticleEntity">
+         select  u.uid ,username,aid,title,content,maketime,type,list_style
+           from  article  INNER JOIN user u on article.uid= u.uid
+           where u.uid=#{uid};
+    </select>
+            <!--feed 页面-->
+    <select id="feedSelect"   resultType="com.whx.qzznnb.entity.ArticleEntity">
+       SELECT aid,username,u.uid, title, SUBSTR(content FROM 1 FOR 50) content,maketime, type,list_style
+         from  article   INNER JOIN user u on article.uid= u.uid
+    </select>
+           <!-- 直接 保存精华文章-->
+    <insert id="saveArticle" parameterType="com.whx.qzznnb.entity.ArticleEntity">
+    INSERT INTO article  (uid,aid,title,content,maketime,type,list_style,status)
+     VALUES(#{uid},#{aid},#{title},#{content},#{maketime},#{type},#{list_style},#{status});
+    </insert>
+    <!--              文章后台权限管理模块   -->
+    <!-- 删除文章 根据文章的aid-->
+    <delete id ="delete_aid">
+        delete  from article
+        where  aid=#{aid}
+    </delete>
+
+    <!-- 批量删除文章  -->
+    <delete id ="delete_aid_list" parameterType="java.util.List">
+        delete  from article
+        where  aid  in
+         <foreach collection="list" item="arr" separator="," open="(" close=")">
+        #{arr}
+         </foreach>
+    </delete>
+    <!-- 查询未审核文章-->
+    <select id="selectAll_status" resultType="com.whx.qzznnb.entity.ArticleEntity">
+
+SELECT  a.title,a.content,a.maketime,a.aid,a.list_style,
+        type,u.username,u.uid,a.type
+        FROM article_user a , user u
+where a.status="2" and u.uid =a.uid;
+    </select>
+    <!--  修改文章状态 -->
+    <update id="update_status" parameterType="String">
+        update article_user
+        set a.status=#{status}
+        where aid=#{aid}
+    </update>
+    <!--  批量——修改文章状态 -->
+    <update id="update_status_list" parameterType="String">
+        update article_user
+        set a.status=#{status}
+        where aid in <foreach collection="staus_list" open="(" close=")" item="aid">
+        #{aid} </foreach>
+    </update>
+
+
+</mapper>

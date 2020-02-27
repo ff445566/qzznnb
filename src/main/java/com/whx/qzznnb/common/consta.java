@@ -1,7 +1,9 @@
 package com.whx.qzznnb.common;
 
 
-
+/**
+ * 接口返回类
+ */
 public class consta {
     public static final String CURRENT_USER = "currentuser";
     public static final String  EMAIL="email";

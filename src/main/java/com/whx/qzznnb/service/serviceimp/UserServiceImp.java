@@ -23,7 +23,7 @@ public class UserServiceImp implements UserService {
 
 
     @Override
-    public String checkPhone(String phone) {
+    public User checkPhone(String phone) {
         return userMapper.checkPhone(phone);
     }
 

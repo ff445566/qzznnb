@@ -12,9 +12,9 @@ public interface UserMapper {
 
     String checkUserName(String username); //检查用户名
 
-    String checkPhone(String phone); //检查手机号是否注册
+    User checkPhone(String phone); //检查手机号是否注册
 
-    User login(String  phone,String password); //登录
+    User login(@Param("phone")String  phone,@Param("password") String password); //登录
 
     String checkLastTime(@Param("uid")String uid); // 查询最新打卡时间的时间
 

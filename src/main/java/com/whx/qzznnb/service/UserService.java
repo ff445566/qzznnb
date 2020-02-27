@@ -6,7 +6,7 @@ import com.whx.qzznnb.entity.User;
 public interface  UserService {
     public  int createUser(User user);
     public  String checkUserName(String username);
-    public  String checkPhone(String phone);
+    public  User checkPhone(String phone);
     public  User login(String phone,String password);
 
     public String selectkLastTime(String uid); // 最新打卡时间

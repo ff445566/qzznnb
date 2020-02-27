@@ -9,14 +9,23 @@ import java.util.HashMap;
  * @Version 1.0.0
  **/
 public class UserEntity {
+
+
     private HashMap<String ,String > user_info =
             new HashMap<String, String>(); // 把作者uid 和username 一起传过去{uid.username}
-   public  UserEntity(){}
-   public UserEntity(User user){
-       this.user_info.put("uid",user.getUid());
-       this.user_info.put("username",user.getUsername());
+   public  UserEntity(){
 
    }
+   public UserEntity(User user){
+       this.user_info.put("uid",user.getUid());
+       this.user_info.put("user_name",user.getUsername());
+   }
+
+    public UserEntity(String uid, String username) {
+        this.user_info.put("uid",uid);
+        this.user_info.put("user_name",username);
+    }
+
     public HashMap<String, String> getUser_info() {
         return user_info;
     }
@@ -24,4 +33,5 @@ public class UserEntity {
     public void setUser_info(HashMap<String, String> user_info) {
         this.user_info = user_info;
     }
+
 }

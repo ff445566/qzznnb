@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whx.qzznnb.play.mapper.Play_AnswerMapper">
+
+           <!-- 保存答案-->
+    <insert id="save_play_answer" parameterType="com.whx.qzznnb.play.entity.Play_Answer">
+    INSERT INTO play_answer  (anid,qid,uid,content,maketime,list_style,q_uid)
+     VALUES(#{anid},#{qid},#{uid},#{content},#{maketime},#{list_style},(SELECT uid from play_question where qid ={qid} ))  );
+    </insert>
+	<select id="select_play_answer" resultType="com.whx.qzznnb.play.entity.Play_Answer">
+SELECT
+	anid,
+	qid,
+	a.uid,
+	b.username,
+	SUBSTR(content FROM 1 FOR 50) content,
+	maketime,
+	list_style
+FROM
+	play_answer a,
+	user b
+WHERE
+b.uid =a.uid
+and
+	qid =#{qid}
+    </select>
+	<!--根据uid 查询回答的答案和对应的问题-->
+	<select id="select_paly_answerbyuid"  resultType="com.whx.qzznnb.play.entity.Play_AnswerAndQuestion">
+	SELECT
+	a.qid a_qid,
+	anid a_anid,
+	a.uid a_uid,
+	u1.username a_username,
+	a.content a_content,
+	a.maketime a_maketime,
+	a.list_style a_liststyle,
+	q.qid q_qid,
+	q.uid q_uid,
+	u2.username q_username,
+	q.title q_title,
+	q.content q_content,
+	q.maketime q_maketime,
+	q.list_style q_liststyle,
+	q.feed_style q_feed_style,
+	q.type q_type,
+	t.type_name q_type_name
+FROM
+	play_answer a
+JOIN play_question q ON a.qid = q.qid
+JOIN USER u1 ON u1.uid = a.uid
+JOIN USER u2 ON u2.uid = q.uid
+JOIN play_topic t ON t.type_id = q.type
+WHERE
+	q.uid =#{uid}
+
+	</select>
+</mapper>

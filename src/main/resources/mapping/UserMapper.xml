@@ -12,7 +12,11 @@
        select uid,username,password,phone, user_type FROM user where uid=#{uid};
     </select>
     <select id="login" resultType="com.whx.qzznnb.entity.User">
-        select  uid ,username from  user where phone=#{phone} and password =#{password}
+        select  uid ,username from  user
+        <where>
+            <if test="phone != null"> and phone = #{phone} </if>
+            <if test="password != null"> and password =#{password}</if>
+        </where>
     </select>
     <insert id="createUser" parameterType="com.whx.qzznnb.entity.User">
         insert into user(username,password,uid,phone,user_type) value(#{username},#{password},#{uid},#{phone},#{user_type})
@@ -22,8 +26,8 @@
            select  username from  user  where username= #{username}
     </select>
     <!--检测手机号  是否重复-->
-    <select id="checkPhone" resultType="java.lang.Integer">
-           select  uid from  user  where phone= #{phone}
+    <select id="checkPhone" resultType="com.whx.qzznnb.entity.User">
+           select  uid,username,password,user_type from  user  where phone= #{phone}
     </select>
     <!--  查询最新打卡时间 -->
     <select id="checkLastTime" resultType="String">
